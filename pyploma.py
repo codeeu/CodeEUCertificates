@@ -6,16 +6,16 @@
 
 print "Pyploma: Diploma generator for LaTeX and pdf.\n"
 
-# Invocar al terminal
+# Invoke terminal
 from commands import *
 import commands
 def run_command(cmd):
 	getstatusoutput(cmd)
 
-# Cargar lista de nombres
+# Load the list of names
 lista = open("listadip", "r").readlines()
 
-#contador
+#counter
 a = 100
 
 for line in lista: # for each person in the list

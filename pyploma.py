@@ -13,37 +13,30 @@ import commands
 def run_command(cmd):
 	getstatusoutput(cmd)
 
-# Load the list of names
-lista = open("listadip", "r").readlines()
-
-#counter
-#a = 100
-
 if len(sys.argv) != 2:
 	print "The name of the certificate must be provided"
-	#return
+else:
+	name = str(sys.argv[1])
+	filename = name.replace(" ", "")
 
-name = str(sys.argv[1])
-filename = name.replace(" ", "")
+	salida = open(filename + ".tex","w") # create a LaTeX file for each person in the list
 
-salida = open(filename + ".tex","w") # create a LaTeX file for each person in the list
+	text = open("certi.tex") # open the LaTeX document
+	text = text.read() # read it
+	text_list = list(text) # transform it into a list
 
-text = open("certi.tex") # open the LaTeX document
-text = text.read() # read it
-text_list = list(text) # transform it into a list
+	y_name = text.find("%pointname") #search the point for name inclusion
+	z_name = len("%pointname")+2
+	text_list[y_name+z_name:y_name+z_name] = name # insert the name
 
-y_name = text.find("%pointname") #search the point for name inclusion
-z_name = len("%pointname")+2
-text_list[y_name+z_name:y_name+z_name] = name # insert the name
+	text_final = "".join(text_list) # from list to string
 
-text_final = "".join(text_list) # from list to string
+	salida.write(text_final) # save changes in the created file
+	salida.close() # closes the file
 
-salida.write(text_final) # save changes in the created file
-salida.close() # closes the file
+	run_command(str("pdflatex -interaction=nonstopmode " + filename + ".tex")) # compile LaTeX a pdf (optional)
+	print name #control
 
-run_command(str("pdflatex -interaction=nonstopmode " + filename + ".tex")) # compile LaTeX a pdf (optional)
-print name #control
+	run_command(str("pdftk output*.pdf cat output todos_diplomas.pdf")) # create pdf with all the created diplomas (optional)
 
-run_command(str("pdftk output*.pdf cat output todos_diplomas.pdf")) # create pdf with all the created diplomas (optional)
-
-print "\nAnd we are done! :-)" #control
+	print "\nAnd we are done! :-)" #control

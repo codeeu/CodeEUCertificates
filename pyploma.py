@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This diploma generator read a list of names to 
+# This diploma generator read a list of names to
 # fill a LaTeX template with a point for the name.
 # Optinally, it can compile the LaTeX files and join them.
 # If LaTeX errors are present, then press Enter.
@@ -13,11 +13,11 @@ import commands
 def run_command(cmd):
 	getstatusoutput(cmd)
 
-if len(sys.argv) != 2:
-	print "The name of the certificate must be provided"
+if len(sys.argv) != 3:
+	print "Usage: python pyploma.py \"Name To be Printed\" Event_ID"
 else:
 	name = str(sys.argv[1])
-	filename = name.replace(" ", "")
+	filename = str(sys.argv[2])
 
 	salida = open(filename + ".tex","w") # create a LaTeX file for each person in the list
 

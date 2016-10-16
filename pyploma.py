@@ -13,11 +13,12 @@ import commands
 def run_command(cmd):
 	getstatusoutput(cmd)
 
-if len(sys.argv) != 3:
-	print "Usage: python pyploma.py \"Name To be Printed\" Event_ID"
+if len(sys.argv) != 4:
+	print "Usage: python pyploma.py \"Name To be Printed\" Event_ID\"Year"
 else:
 	name = str(sys.argv[1])
 	filename = str(sys.argv[2])
+	year = str(sys.argv[3])
 
 	salida = open(filename + ".tex","w") # create a LaTeX file for each person in the list
 
@@ -28,6 +29,9 @@ else:
 	y_name = text.find("%pointname") #search the point for name inclusion
 	z_name = len("%pointname")+2
 	text_list[y_name+z_name:y_name+z_name] = name # insert the name
+	x_name = text.find("%pointyear") #search the point for year inclusion
+	n_name = len("%pointyear")+4
+	text_list[x_name+n_name:x_name+n_name] = year # insert the year
 
 	text_final = "".join(text_list) # from list to string
 
